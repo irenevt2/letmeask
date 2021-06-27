@@ -12,6 +12,8 @@ import '../styles/room.scss';
 
 import { Question } from '../components/Question';
 
+import { useHistory } from 'react-router-dom';
+
 type RoomParams = {
     id: string;
 }
@@ -50,7 +52,8 @@ export function Room() {
         setNewQuestion('');
         
     }
-
+    
+    const history = useHistory();
     async function handleLikeQuestion(questionId: string, likeId: string | undefined) {
         if (likeId) {
           await database.ref(`rooms/${roomId}/questions/${questionId}/likes/${likeId}`).remove()
@@ -60,6 +63,8 @@ export function Room() {
           })
         }
       }
+
+      
     return(
         <div className="content" id="page-room" >
             <header>
@@ -88,7 +93,7 @@ export function Room() {
                                 <span>{user.name}</span>
                             </div>
                         ) : (
-                            <span>Para enviar uma pergunta, <button>faca seu login</button>. </span>
+                            <span>Para enviar uma pergunta, <button  onClick={() => history.push('/')}>faca seu login</button>. </span>
                         ) }
                         <Button type="submit" disabled={!user}>Enviar pergunta2</Button>
                     </div>
